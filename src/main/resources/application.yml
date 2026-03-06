@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: inroxy
+  ai:
+    mcp:
+      server:
+        name: inroxy
+        version: 0.1.0
+
+vardguiden:
+  base-url: https://e-tjanster.1177.se
+  journalen-base-url: https://journalen.1177.se
