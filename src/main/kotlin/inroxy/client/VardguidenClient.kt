@@ -15,111 +15,61 @@ class VardguidenClient(
 
     suspend fun getUserProfile(cookies: String): UserProfile? =
         vardguidenWebClient.get()
-            .uri("/api/user/profile")
+            .uri("/api/core/userprofile")
             .header("Cookie", cookies)
             .retrieve()
             .bodyToMono<UserProfile>()
             .awaitSingleOrNull()
 
-    suspend fun getAppointments(cookies: String): List<VardguidenAppointment> =
+    suspend fun getAppointmentEvents(cookies: String): AppointmentEventsResponse? =
         vardguidenWebClient.get()
-            .uri("/api/appointments")
+            .uri("/api/core/overview/events/appointment-events")
             .header("Cookie", cookies)
             .retrieve()
-            .bodyToMono<AppointmentListResponse>()
-            .awaitSingleOrNull()
-            ?.appointments ?: emptyList()
-
-    suspend fun getAppointment(id: String, cookies: String): VardguidenAppointment? =
-        vardguidenWebClient.get()
-            .uri("/api/appointments/{id}", id)
-            .header("Cookie", cookies)
-            .retrieve()
-            .bodyToMono<VardguidenAppointment>()
+            .bodyToMono<AppointmentEventsResponse>()
             .awaitSingleOrNull()
 
     suspend fun getInboxMessages(cookies: String): List<InboxMessage> =
         vardguidenWebClient.get()
-            .uri("/api/inbox/messages")
+            .uri("/api/core/inbox/message")
             .header("Cookie", cookies)
             .retrieve()
-            .bodyToMono<InboxListResponse>()
-            .awaitSingleOrNull()
-            ?.messages ?: emptyList()
+            .bodyToMono<List<InboxMessage>>()
+            .awaitSingleOrNull() ?: emptyList()
 
-    suspend fun getInboxMessage(id: String, cookies: String): InboxMessage? =
+    suspend fun getEhrSystemEvents(cookies: String): List<EhrSystemEvent> =
         vardguidenWebClient.get()
-            .uri("/api/inbox/messages/{id}", id)
+            .uri("/api/core/overview/events/ehr-system-events")
             .header("Cookie", cookies)
             .retrieve()
-            .bodyToMono<InboxMessage>()
+            .bodyToMono<EhrSystemEventsResponse>()
             .awaitSingleOrNull()
+            ?.ehrSystemEvents ?: emptyList()
+
+    // journalen.1177.se endpoints return HTML - these are placeholders
+    // until we implement HTML scraping or discover JSON APIs
 
     suspend fun getJournalEntries(cookies: String): List<JournalEntry> =
-        journalenWebClient.get()
-            .uri("/api/journal/entries")
-            .header("Cookie", cookies)
-            .retrieve()
-            .bodyToMono<JournalListResponse>()
-            .awaitSingleOrNull()
-            ?.entries ?: emptyList()
+        emptyList()
 
     suspend fun getJournalEntry(id: String, cookies: String): JournalEntry? =
-        journalenWebClient.get()
-            .uri("/api/journal/entries/{id}", id)
-            .header("Cookie", cookies)
-            .retrieve()
-            .bodyToMono<JournalEntry>()
-            .awaitSingleOrNull()
+        null
 
     suspend fun getMedications(cookies: String): List<Medication> =
-        vardguidenWebClient.get()
-            .uri("/api/medications")
-            .header("Cookie", cookies)
-            .retrieve()
-            .bodyToMono<MedicationListResponse>()
-            .awaitSingleOrNull()
-            ?.medications ?: emptyList()
+        emptyList()
 
     suspend fun getMedication(id: String, cookies: String): Medication? =
-        vardguidenWebClient.get()
-            .uri("/api/medications/{id}", id)
-            .header("Cookie", cookies)
-            .retrieve()
-            .bodyToMono<Medication>()
-            .awaitSingleOrNull()
+        null
 
     suspend fun getImmunizations(cookies: String): List<VardguidenImmunization> =
-        vardguidenWebClient.get()
-            .uri("/api/immunizations")
-            .header("Cookie", cookies)
-            .retrieve()
-            .bodyToMono<ImmunizationListResponse>()
-            .awaitSingleOrNull()
-            ?.immunizations ?: emptyList()
+        emptyList()
 
     suspend fun getImmunization(id: String, cookies: String): VardguidenImmunization? =
-        vardguidenWebClient.get()
-            .uri("/api/immunizations/{id}", id)
-            .header("Cookie", cookies)
-            .retrieve()
-            .bodyToMono<VardguidenImmunization>()
-            .awaitSingleOrNull()
+        null
 
     suspend fun getCareUnits(cookies: String): List<CareUnit> =
-        vardguidenWebClient.get()
-            .uri("/api/careunits")
-            .header("Cookie", cookies)
-            .retrieve()
-            .bodyToMono<CareUnitListResponse>()
-            .awaitSingleOrNull()
-            ?.careUnits ?: emptyList()
+        emptyList()
 
     suspend fun getCareUnit(id: String, cookies: String): CareUnit? =
-        vardguidenWebClient.get()
-            .uri("/api/careunits/{id}", id)
-            .header("Cookie", cookies)
-            .retrieve()
-            .bodyToMono<CareUnit>()
-            .awaitSingleOrNull()
+        null
 }

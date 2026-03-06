@@ -12,12 +12,7 @@ class AppointmentService(
 ) {
 
     suspend fun getAppointments(cookies: String): List<Appointment> {
-        val appointments = client.getAppointments(cookies)
-        return mapper.toFhirList(appointments)
-    }
-
-    suspend fun getAppointment(id: String, cookies: String): Appointment? {
-        val appointment = client.getAppointment(id, cookies) ?: return null
-        return mapper.toFhir(appointment)
+        val response = client.getAppointmentEvents(cookies)
+        return mapper.toFhirList(response?.appointments ?: emptyList())
     }
 }

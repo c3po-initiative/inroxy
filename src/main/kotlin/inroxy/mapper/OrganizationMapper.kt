@@ -45,12 +45,12 @@ class OrganizationMapper {
             }
         }
 
-        source.address?.let { addr ->
+        if (source.street != null || source.city != null || source.postalCode != null) {
             org.addAddress().apply {
-                addr.street?.let { addLine(it) }
-                city = addr.city
-                postalCode = addr.postalCode
-                country = addr.country
+                source.street?.let { addLine(it) }
+                city = source.city
+                postalCode = source.postalCode
+                country = "SE"
             }
         }
 

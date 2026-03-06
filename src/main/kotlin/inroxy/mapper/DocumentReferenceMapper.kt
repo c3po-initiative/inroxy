@@ -11,39 +11,20 @@ class DocumentReferenceMapper {
         val doc = DocumentReference()
 
         source.id?.let { doc.id = it }
-        doc.status = if (source.isRead == true) {
-            Enumerations.DocumentReferenceStatus.CURRENT
-        } else {
-            Enumerations.DocumentReferenceStatus.CURRENT
-        }
+        doc.status = Enumerations.DocumentReferenceStatus.CURRENT
 
-        source.subject?.let { doc.description = it }
+        source.threadTitle?.let { doc.description = it }
 
-        source.receivedDate?.let { dateStr ->
+        source.messageDate?.let { dateStr ->
             parseDate(dateStr)?.let { doc.date = it }
         }
 
-        source.senderName?.let { name ->
-            doc.addAuthor(Reference().apply {
-                display = name
-                source.senderId?.let { id = "Organization/$it" }
-            })
+        source.facilityName?.let { name ->
+            doc.addAuthor(Reference().apply { display = name })
         }
 
-        source.content?.let { text ->
-            val attachment = Attachment().apply {
-                contentType = source.contentType ?: "text/plain"
-                data = text.toByteArray()
-            }
-            doc.addContent().attachment = attachment
-        }
-
-        source.careUnitId?.let { unitId ->
-            doc.context = DocumentReference.DocumentReferenceContextComponent().apply {
-                addRelated(Reference("Organization/$unitId").apply {
-                    display = source.careUnitName
-                })
-            }
+        source.threadLabel?.let { label ->
+            doc.addCategory(CodeableConcept().apply { text = label })
         }
 
         return doc

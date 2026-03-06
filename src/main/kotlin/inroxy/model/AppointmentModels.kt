@@ -1,5 +1,10 @@
 package inroxy.model
 
+data class AppointmentEventsResponse(
+    val totalNumberOfAppointments: Int? = null,
+    val appointments: List<VardguidenAppointment>? = null
+)
+
 data class VardguidenAppointment(
     val id: String? = null,
     val startTime: String? = null,
@@ -13,8 +18,4 @@ data class VardguidenAppointment(
     val location: String? = null,
     val isVideoVisit: Boolean? = null,
     val isCancellable: Boolean? = null
-)
-
-data class AppointmentListResponse(
-    val appointments: List<VardguidenAppointment>? = null
 )

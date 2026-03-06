@@ -15,9 +15,4 @@ class DocumentReferenceService(
         val messages = client.getInboxMessages(cookies)
         return mapper.toFhirList(messages)
     }
-
-    suspend fun getDocumentReference(id: String, cookies: String): DocumentReference? {
-        val message = client.getInboxMessage(id, cookies) ?: return null
-        return mapper.toFhir(message)
-    }
 }

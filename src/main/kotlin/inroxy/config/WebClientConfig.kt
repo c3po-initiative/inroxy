@@ -12,6 +12,7 @@ class WebClientConfig(private val properties: VardguidenClientProperties) {
         WebClient.builder()
             .baseUrl(properties.baseUrl)
             .defaultHeader("Accept", "application/json")
+            .defaultHeader("X-Requested-With", "XMLHttpRequest")
             .build()
 
     @Bean
@@ -19,5 +20,6 @@ class WebClientConfig(private val properties: VardguidenClientProperties) {
         WebClient.builder()
             .baseUrl(properties.journalenBaseUrl)
             .defaultHeader("Accept", "application/json")
+            .defaultHeader("X-Requested-With", "XMLHttpRequest")
             .build()
 }
