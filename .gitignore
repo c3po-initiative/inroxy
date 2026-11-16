@@ -18,3 +18,7 @@ Thumbs.db
 
 # Spring Boot
 *.log
+
+# Claude Code personal files (may hold secrets)
+**/.claude/settings.local.json
+CLAUDE.local.md
